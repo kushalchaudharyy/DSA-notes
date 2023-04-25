@@ -1,0 +1,19 @@
+class Solution
+{
+    public:
+    //Function to search a given number in row-column sorted matrix.
+    bool search(vector<vector<int> > matrix, int n, int m, int x) 
+    {
+        int i = 0, j = m-1;
+        while((i >= 0 && i < n) && (j >= 0 && j < m)){
+            if(matrix[i][j] == x)
+            return true;
+            else if(matrix[i][j] > x)
+            j--;
+            else 
+            i++;
+        }
+        return false;
+    }
+    
+    //if target is lesser than current element that go at left element if target is greater than go on down side 
