@@ -1,0 +1,51 @@
+#include <bits/stdc++.h> 
+/*************************************************
+        Following is the structure of class Node:
+     
+        class Node{
+        public:
+            int data;
+            Node* next;
+            
+            Node(int data){
+                this->data = data;
+                this->next = NULL;
+            }
+            
+        }
+**************************************************/
+Node* loop(Node* head){
+    Node* slow = head;
+    Node *fast = head;
+    while(fast != NULL && fast->next != NULL){
+        fast = fast->next->next;
+        slow = slow->next;
+        if(fast == slow){
+            return fast;
+        }
+    }
+    return NULL;
+}
+
+Node * getNode(Node* head , Node* fast){
+    while(head != fast){
+        head = head->next;
+        fast = fast->next;
+    }
+    return fast;
+}
+bool isCircular(Node* head){
+    if(head == NULL){
+        return true;
+    }
+    Node *fast = loop(head);
+    if(fast){
+        Node *st = getNode(head,fast);
+        if(st == head){
+            return true;
+        }
+        else
+        return false;
+    }
+    return false;   
+}
