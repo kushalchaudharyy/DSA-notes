@@ -1,0 +1,26 @@
+Node * uniqueSortedList(Node * head) {
+    // Write your code here.
+    if(head == NULL||head->next == NULL||head->next->next == NULL){
+        return head;
+    }
+    while(head->data == head->next->data){
+        head = head->next;
+    }
+    Node* curr = head->next;
+    Node* nxt = NULL;
+    while(curr != NULL && curr->next != NULL){
+        nxt = curr->next;
+        if(curr->data == nxt->data){
+            Node* temp= nxt;
+            curr->next = nxt->next;
+            delete temp;
+        }
+        else{
+            curr = nxt;
+        }
+    }
+    return head;
+}
+
+TC = O(n)
+SC = O(1)
