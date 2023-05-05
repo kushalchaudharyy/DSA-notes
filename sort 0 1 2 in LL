@@ -1,0 +1,88 @@
+Approach 1 : Count sort
+
+Node* sortList(Node *head)
+{
+    // Write your code here.
+    Node* temp= head;
+    int zeroCount = 0, oneCount = 0, twoCount = 0;
+
+    while(temp != NULL){
+        if(temp->data == 0){
+            zeroCount++;
+        }
+        else if(temp->data == 1){
+            oneCount++;
+        }
+        else if (temp->data == 2){
+            twoCount++;
+        }
+        temp = temp->next;
+    }
+
+    temp = head;
+    while(temp != NULL){
+        if(zeroCount != 0){
+            temp->data = 0;
+            zeroCount--;
+        }
+        else if(oneCount != 0){
+            temp->data = 1;
+            oneCount--;
+        }
+        else if(twoCount != 0){
+            temp->data = 2;
+            twoCount--;
+        }
+        temp = temp->next;
+       
+    }
+     return head;
+}
+
+TC= o(n)
+SC = o(1);
+
+
+2nd approach is doing the same without replacing data
+
+   
+void ins(Node* &head, Node* &tail,Node* &temp){
+  if(head == temp && head->data == -1){
+      head = temp;
+      tail = temp;
+      temp->next = NULL;
+      return;
+  }
+  tail->next = temp;
+  temp->next = NULL;
+  tail = temp; 
+}
+Node* sortList(Node *head)
+{
+    // Write your code here.
+    Node* head0 = new Node(-1);
+    Node* tail0 = head0;
+    Node* head1 = new Node(-1);
+    Node* tail1 = head1;
+    Node* head2 = new Node(-1);
+    Node* tail2 = head2;
+
+    Node * temp = head;
+    while(temp != NULL){
+        Node* cn = temp->next;
+        if(temp->data == 0)
+        ins(head0,tail0,temp);
+        else if(temp->data == 1)
+        ins(head1,tail1,temp);
+        else if(temp->data == 2)
+        ins(head2,tail2,temp);
+        temp = cn;
+    }
+     tail0->next = head1->next;
+     tail1->next = head2->next;
+     tail2->next = NULL;
+     return head0->next;
+    
+}
+TC = o(n)
+SC = O(1)
