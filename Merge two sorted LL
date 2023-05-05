@@ -1,0 +1,41 @@
+void ins(Node<int>* &head, Node<int>* &box,Node<int>* &temp){
+    int value = box->data;
+    
+    while (temp->next != NULL && temp->next->data < value ) 
+      temp = temp->next;
+    
+    
+    
+    box->next = temp->next;
+    temp->next = box;
+    //temp = temp->next;
+
+    return;
+}
+Node<int>* sortTwoLists(Node<int>* first, Node<int>* second)
+{
+    // Write your code here.
+    if(first == NULL)
+    return second;
+    if(second == NULL)
+    return first;
+    if(first->data > second->data){
+        Node<int> * forSwap = second;
+        second = first;
+        first = forSwap;
+    }
+    Node<int>* temp = second;
+    Node<int>* forward = NULL;
+    Node<int>* current = first;
+    while(temp != NULL){
+        forward = temp->next;
+        ins(first, temp,current);
+        temp = forward;
+        //delete cn;
+    }
+     
+    return first;
+}
+
+TC = O(m+n)
+SC = O(1)
