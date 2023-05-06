@@ -1,0 +1,127 @@
+
+class Solution
+{   private:
+    void ins(Node* &head, Node* &tail , int val){
+        Node* newNode = new Node(val);
+        if(head == NULL){
+            head = newNode;
+            tail= newNode;
+            return;
+        }
+        else{
+            tail->next = newNode;
+            tail = newNode;
+            return;
+        }
+        
+    }
+    public:
+    Node *copyList(Node *head)
+    {
+        Node * cloneHead = NULL;
+        Node* cloneTail = NULL;
+        
+        Node* temp = head;
+        while(temp != NULL){
+            ins(cloneHead, cloneTail, temp->data);
+            temp = temp->next;
+        }
+        
+        unordered_map<Node*, Node*> mapping;
+        temp = head;
+        Node* cloneTemp = cloneHead;
+        while(temp != NULL){
+            mapping[temp] = cloneTemp;
+            temp = temp->next;
+            cloneTemp = cloneTemp->next;
+        }
+        temp = head;
+        cloneTemp = cloneHead;
+        while(cloneTemp != NULL){
+            cloneTemp->arb = mapping[temp->arb];
+             temp = temp->next;
+            cloneTemp = cloneTemp->next;
+        }
+        
+        return cloneHead;
+    }
+
+};
+
+TC = O(n) 
+SC = o(n)
+
+
+2nd approach 
+without using map 
+void ins(LinkedListNode<int> * &head, LinkedListNode<int> * &tail , int val){
+        LinkedListNode<int> * newNode = new LinkedListNode<int>(val);
+        if(head == NULL){
+            head = newNode;
+            tail= newNode;
+            return;
+        }
+        else{
+            tail->next = newNode;
+            tail = newNode;
+            return;
+        }
+        
+    }
+LinkedListNode<int> *cloneRandomList(LinkedListNode<int> *head)
+{
+    // step 1 -> create a clone
+    LinkedListNode<int> * cloneHead = NULL;
+   LinkedListNode<int> * cloneTail = NULL;
+        
+    LinkedListNode<int> * temp = head;
+    while(temp != NULL){
+        ins(cloneHead, cloneTail, temp->data);
+        temp = temp->next;
+    }
+    //step 2 -> add clone in between original
+    temp = head;
+    LinkedListNode<int> * clone = cloneHead;
+    while(temp!= NULL && clone != NULL){
+        LinkedListNode<int> *nxt = temp->next;
+        temp->next = clone;
+        temp = nxt ;
+
+        nxt = clone->next;
+        clone->next = temp;
+        clone = nxt;
+    }
+
+    // step 3 -> copy random pointer
+    temp = head;
+    while(temp != NULL){
+      if (temp->next != NULL ) {
+          if(temp->random != NULL)
+        temp->next->random = temp->random->next;
+          else {
+            temp->next->random = NULL;
+          }
+      }
+        temp = temp->next->next;
+      
+    }
+
+    // revert changes
+    temp = head;
+    clone = cloneHead;
+    while(temp != NULL && clone != NULL){
+        temp->next = clone->next;
+        temp = temp->next;
+        
+        if(temp!= NULL)
+        clone -> next = temp->next;
+        clone = clone->next; 
+    }
+
+    return cloneHead;
+
+
+}
+
+TC = O(n)
+SC = O(1)
