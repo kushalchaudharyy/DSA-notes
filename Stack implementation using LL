@@ -1,0 +1,87 @@
+#include<iostream>
+#include<stack>
+using namespace std;
+class node{
+    public:
+    int data;
+    node* next;
+
+     node(int data){
+        this->data = data;
+        next = NULL;
+    }
+};
+class Stack{
+    node* top;
+    public:
+    int data ;
+    node* next;
+    int size;
+    int count;
+
+    Stack(int size){
+        this->size = size;
+        top = NULL;
+        count = 0;
+    }
+   
+    void push(int data){
+        if(count >= size){
+            cout<<"stack overflow "<<endl;
+        return;}
+
+        node* temp = new node(data);
+        temp->next = top;
+        top = temp;
+        count++;
+        return;
+    }
+
+    void pop(){
+        if(count <= 0){
+            cout<<"stack is already empty"<<endl;
+        return ;}
+        
+        count--;
+        node* temp = top;
+        top = top->next;
+        delete temp;
+    }
+
+    bool isEmpty(){
+        if(count == 0){
+            return 1;
+        }
+        return 0;
+    }
+
+    int peek(){
+        if(count == 0){
+            return -1;
+        }
+        int date = top->data;
+        return date;
+    }
+
+};
+
+int main(){
+    Stack s(7);
+    s.push(5);
+    s.push(8);
+    s.push(3);
+    cout<<s.peek()<<endl;
+    s.pop();
+    cout<<s.peek()<<endl;
+    s.push(5);
+    s.push(8);
+    s.push(3);
+    s.push(5);
+    s.push(8);
+    s.push(3);
+    s.push(5);
+    s.push(8);
+    s.push(3);
+    s.pop();s.pop();s.pop();s.pop();s.pop();s.pop();s.pop();s.pop();s.pop();
+    cout<<s.peek()<<endl;
+}
