@@ -1,0 +1,119 @@
+Brute force solution
+//{ Driver Code Starts
+//Initial template for C++
+
+#include<bits/stdc++.h>
+using namespace std;
+
+// } Driver Code Ends
+//User function template for C++
+
+class Solution 
+{
+    private:
+    bool checkrow(vector<vector<int> >& M, int n){
+        int col = M[0].size();
+        
+        for(int i = 0; i < col ; i++){
+            if(M[n][i] == 1)
+            return 0;
+        }
+        return 1;
+    }
+    bool checkcol(vector<vector<int> >& M, int n){
+        int row = M.size();
+        for(int i = 0; i < row; i++){
+            if(i == n)
+            continue;
+            if(M[i][n] == 0)
+            return 0;
+        }
+        return 1;
+    }
+    public:
+    //Function to find if there is a celebrity in the party or not.
+    int celebrity(vector<vector<int> >& M, int n) 
+    {
+        // code here 
+        int row = M.size();
+        int col = M[0].size();
+        
+        for(int i = 0 ; i < row ; i++){
+            if(checkrow(M, i)){
+                if(checkcol(M, i))
+                return i;
+            }
+        }
+        return -1;
+    }
+};
+
+//{ Driver Code Starts.
+
+int main()
+{
+    int t;
+    cin>>t;
+    while(t--)
+    {
+        int n;
+        cin>>n;
+        vector<vector<int> > M( n , vector<int> (n, 0));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                cin>>M[i][j];
+            }
+        }
+        Solution ob;
+        cout<<ob.celebrity(M,n)<<endl;
+
+    }
+}
+
+// } Driver Code Ends
+
+optimised solution using stack
+#include <bits/stdc++.h> 
+/*
+	This is signature of helper function 'knows'.
+	You should not implement it, or speculate about its implementation.
+
+	bool knows(int A, int B); 
+	Function 'knows(A, B)' will returns "true" if the person having
+	id 'A' know the person having id 'B' in the party, "false" otherwise.
+*/
+
+int findCelebrity(int n) {
+ 	// Write your code here.
+	 stack<int>s;
+	 for(int i = 0 ; i < n ; i++){
+		 s.push(i);
+	 }
+	 while(s.size() != 1 && !s.empty()){
+		 int a = s.top();
+		 s.pop();
+		 int b = s.top();
+		 s.pop();
+		 if(knows(a, b))
+		 s.push(b);
+		 else if(knows(b, a))
+		 s.push(a);
+	 }
+	 if(s.empty())
+	 return -1;
+	 else{
+		 int a = s.top();
+		 for(int i = 0 ; i < n ; i++){
+			 if(knows(a, i))
+			 return -1;
+			 if(i == a)
+			 continue;
+			 if(!knows(i,a))
+			 return -1;
+			 
+		 }
+		 return a;
+	 }
+}
