@@ -55,3 +55,6 @@ public:
         return arr[index];
     }
 };
+
+TC = O(1)
+SC = O(s+N);
