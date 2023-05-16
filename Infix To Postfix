@@ -1,0 +1,49 @@
+#include <bits/stdc++.h> 
+int priority (char alpha){
+    if(alpha == '+' || alpha =='-')
+        return 1;
+ 
+    if(alpha == '*' || alpha =='/')
+        return 2;
+ 
+    if(alpha == '^')
+        return 3;
+
+ 
+    return 0;
+}
+string infixToPostfix(string infix){
+	// Write your code herestring exp="";
+	string exp="";
+stack<char> s;
+int i = 0;
+while(infix[i] != '\0'){
+    if((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z') || (infix[i] >= '0' && infix[i] <= '9')){
+        exp.push_back(infix[i++]);
+    }
+    else if(infix[i] == '('){
+        s.push('(');
+        i++;
+    }
+    else if(infix[i] == ')'){
+        while(s.top() != '('){
+            exp.push_back(s.top());
+            s.pop();
+        }
+        s.pop();
+        i++;
+    }
+    else {
+        while(!s.empty() && priority(infix[i]) <= priority(s.top())){
+        exp.push_back(s.top());
+        s.pop();
+        }
+        s.push(infix[i++]);
+    }
+}
+while(!s.empty()){
+    exp.push_back(s.top());
+    s.pop();
+}
+return exp;
+}
