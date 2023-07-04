@@ -1,0 +1,65 @@
+Que 1 : Given row & col tell me element at that place , R= 5, c= 3.
+    a) BF- generate complete triangle and return that element 
+    b) (row-1)C(col-1)
+          long long funNCR(n,r){
+            long long res = 1;                    -----------
+            for(int i = 0; i < r; i++){                          > Tc - O(r) & SC - O(1);
+            res = res * (n-i);                    -----------
+            res = res / (i + 1);}
+            return res;
+          }
+
+
+
+Que 2: Print any Row .
+   1st row has 1 element 
+   2nd row has 2 elements
+    .        .                                                
+    .        .                                                    funNCR();
+    .        .                                                    ^
+   nth row has n elements                                         |
+                                                                  |
+    a) BF: for(int col = 1; col < n ; col++){  ======> TC - O(n * r)  SC - O(1)
+              print(funNCR(n-1, col-1);}                <-----|     
+
+    b) Optimal : ans  = 1;
+                  push(ans);
+                    for(int i = 1 ; i < n ; i++){
+                      ans = ans * ( n - i);          ========> TC - O(n)  & SC - O(1);
+                      ans  = ans/i;
+                      push(ans);}
+
+
+Que 3: Given N, Print entire triangle 
+    a) BF: for( row = 1 -> N)
+              temp;
+            for(col = 1 -> row)
+              temp.push(funNCR(row-1, col -1);} =======> TC - O(n * n * r)
+              ans.push(vector);}
+              return ans;
+
+
+
+  b) Optimal generate every row
+     TC -( n* n );
+
+vector<int> generateRow(int row){
+    vector<int> temp;
+    temp.push_back(1);
+    long long ans = 1;
+    for(int col = 1; col <= row ;col++){
+        ans= ans*(row-col);
+        ans = ans / col;
+        temp.push_back(ans);
+    }
+    temp.pop_back();
+    return temp;
+}
+vector<vector<int>> pascalTriangle(int N) {
+    // Write your code here.
+   vector<vector<int>> ans;
+   for(int i = 1; i <= N; i++){
+       ans.push_back(generateRow(i));
+   } 
+   return ans;
+}
