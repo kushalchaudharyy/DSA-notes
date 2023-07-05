@@ -1,0 +1,20 @@
+void set(int ind, vector<int> &ans, vector<int> num, int n, int sum = 0 )
+{
+	if(ind == n){
+		ans.push_back(sum);
+		return;
+	}
+	set(ind+1, ans, num, n,sum+num[ind]);
+	set(ind+1, ans, num, n,sum);
+}
+
+vector<int> subsetSum(vector<int> &num){
+	// Write your code here.	
+	vector<int> ans;
+	set(0, ans, num, num.size());
+	sort(ans.begin(),ans.end());
+	return ans;
+}
+
+TC: 2^n * log(2^n);
+SC: O(2^n)
