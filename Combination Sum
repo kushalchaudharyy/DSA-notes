@@ -1,0 +1,27 @@
+#include<iostream>
+#include<bits/stdc++.h>
+using namespace std;
+void fun(int ind, int *arr, int target, vector<int>& ans, int n){
+    if(ind >= n){
+        if(target == 0){
+            for(auto x : ans)
+            cout<<x <<" "; 
+            cout<<endl;
+        }
+        return;
+    }
+        if(arr[ind] <= target){
+        ans.push_back(arr[ind]);
+        fun(ind ,arr, target - arr[ind], ans, n);
+        ans.pop_back();
+        }
+        fun(ind+1 ,arr, target, ans, n);
+    } 
+
+int main(){
+    int arr[] = {2,3,4,5,6};
+    int n = 5;
+    int target = 10;
+    vector<int> ans;
+    fun(0,arr, target, ans, n);
+}
