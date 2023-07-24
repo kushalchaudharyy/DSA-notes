@@ -1,0 +1,10 @@
+
+void merge(long long arr1[], long long arr2[], int n, int m) {
+int l = n-1, r = 0;
+while(l >=0 && r < m)
+if(arr2[r] < arr1[l]) swap(arr2[r++], arr1[l--]);                   //   TC = O(min(n,m)) + O(n logn) + O(m logm);
+else break;                                                         //   SC = O(1)
+sort(arr1, arr1+n);						    						
+sort(arr2, arr2+m);
+} 
+
